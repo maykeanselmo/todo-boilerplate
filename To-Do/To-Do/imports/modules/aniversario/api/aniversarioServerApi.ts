@@ -25,6 +25,8 @@ class AniversarioServerApi extends ProductServerBase<IAniversario> {
 				projection: { name: 1, birthday: 1, phone: 1, remember: 1, delivery: 1 }
 			});
 		});
+		
+		
 
 		// this.addRestEndpoint(
 		// 	'view',

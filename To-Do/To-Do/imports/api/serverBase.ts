@@ -791,7 +791,7 @@ export class ServerApiBase<Doc extends IDoc> {
 	 * @param  {Function} newPublicationsFunction - Function the handle the publication of the data
 	 */
 	addPublication = (publication: string, newPublicationsFunction: any) => {
-		const self = this;
+		const self = this; 
 
 		if (Meteor.isServer) {
 			Meteor.publish(`${self.collectionName}.${publication}`, newPublicationsFunction);
