@@ -38,8 +38,8 @@ const initialConfig = {
 const ToDosListController = () => {
 	const [config, setConfig] = React.useState<IInitialConfig>(initialConfig);
 
-	const { title, type, typeMulti } = toDosApi.getSchema();
-	const toDosSchReduzido = { title, type, typeMulti, createdat: { type: Date, label: 'Criado em' } };
+	const { title,  typeMulti, date, user, userId} = toDosApi.getSchema();
+	const toDosSchReduzido = { title, typeMulti, date, user, userId };
 	const navigate = useNavigate();
 
 	const { sortProperties, filter } = config;
@@ -50,14 +50,18 @@ const ToDosListController = () => {
 	const { loading, toDoss } = useTracker(() => {
 		const subHandle = toDosApi.subscribe('toDosList', filter, {
 			sort
-		});
+		})??null;
+		
 		const toDoss = subHandle?.ready() ? toDosApi.find(filter, { sort }).fetch() : [];
+		console.log("Dados recebidos do servidor:", toDoss);
 		return {
 			toDoss,
 			loading: !!subHandle && !subHandle.ready(),
 			total: subHandle ? subHandle.total : toDoss.length
 		};
+		
 	}, [config]);
+	
 
 	const onAddButtonClick = useCallback(() => {
 		const newDocumentId = nanoid();
