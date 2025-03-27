@@ -7,7 +7,9 @@ import { toDosApi } from '../../api/toDosApi';
 import { IToDos } from '../../api/toDosSch';
 import { ISchema } from '/imports/typings/ISchema';
 import { IMeteorError } from '/imports/typings/BoilerplateDefaultTypings';
-import { SysAppLayoutContext } from '/imports/app/appLayout';
+import AppLayoutContext, { IAppLayoutContext } from '/imports/app/appLayoutProvider/appLayoutContext';
+import AuthContext from '/imports/app/authProvider/authContext';
+import { Meteor } from 'meteor/meteor';
 
 interface IToDosDetailContollerContext {
 	closePage: () => void;
@@ -25,7 +27,8 @@ export const ToDosDetailControllerContext = createContext<IToDosDetailContollerC
 const ToDosDetailController = () => {
 	const navigate = useNavigate();
 	const { id, state } = useContext(ToDosModuleContext);
-	const { showNotification } = useContext(SysAppLayoutContext);
+	const { showNotification } = useContext(AppLayoutContext);
+	const { user } = useContext(AuthContext);
 
 	const { document, loading } = useTracker(() => {
 		const subHandle = !!id ? toDosApi.subscribe('toDosDetail', { _id: id }) : null;
@@ -51,7 +54,7 @@ const ToDosDetailController = () => {
 				showNotification({
 					type: 'success',
 					title: 'Operação realizada!',
-					message: `O exemplo foi ${selectedAction === 'update' ? 'atualizado' : 'cadastrado'} com sucesso!`
+					message: `Tarefa ${selectedAction === 'update' ? 'atualizada' : 'cadastrada'} com sucesso!`
 				});
 			} else {
 				showNotification({
@@ -59,7 +62,8 @@ const ToDosDetailController = () => {
 					title: 'Operação não realizada!',
 					message: `Erro ao realizar a operação: ${e.reason}`
 				});
-			}
+			}			
+			
 		});
 	}, []);
 
