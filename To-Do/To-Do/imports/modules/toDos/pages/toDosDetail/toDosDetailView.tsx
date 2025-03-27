@@ -15,6 +15,9 @@ import { SysUploadFile } from '/imports/ui/components/sysFormFields/sysUploadFil
 import SysSlider from '/imports/ui/components/sysFormFields/sysSlider/sysSliderField';
 import { SysLocationField } from '/imports/ui/components/sysFormFields/sysLocationField/sysLocationField';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
+import { SysDatePickerField } from '/imports/ui/components/sysFormFields/sysDatePickerField/sysDatePickerField';
+import TaskIcon from '@mui/icons-material/Task';
+
 
 const ToDosDetailView = () => {
 	const controller = useContext(ToDosDetailControllerContext);
@@ -39,7 +42,7 @@ const ToDosDetailView = () => {
 					</IconButton>
 				)}
 				<Typography variant="h5" sx={{ flexGrow: 1 }}>
-					{isCreate ? 'Adicionar Item' : isEdit ? 'Editar Item' : controller.document.title}
+					{isCreate ? 'Adicionar Tarefa' : isEdit ? 'Editar Tarefa' : controller.document.title}
 				</Typography>
 				<IconButton
 					onClick={!isView ? controller.closePage : () => controller.changeToEdit(controller.document._id || '')}>
@@ -54,25 +57,22 @@ const ToDosDetailView = () => {
 				loading={controller.loading}>
 				<Body>
 					<FormColumn>
-						<SysTextField name="title" placeholder="Ex.: Item XX" />
-						<SysSelectField name="type" placeholder="Selecionar" />
+						<SysTextField name="title" placeholder="Ex.: Tarefa XX" />
+						
 						<SysRadioButton name="typeMulti" childrenAlignment="row" size="small" />
 						<SysTextField
 							name="description"
-							placeholder="Acrescente informações sobre o item (3 linhas)"
+							placeholder="Descrição da Tarefa (3 linhas)"
 							multiline
 							rows={3}
 							maxRows={3}
 							showNumberCharactersTyped
 							max={200}
 						/>
-						<SysUploadFile name="files" />
-						<SysSlider name="slider" />
-						<SysLocationField name="address" />
+						<SysDatePickerField name="date" placeholder="Selecione uma data" />
+						
 					</FormColumn>
-					<FormColumn>
-						<SysCheckBox name="check" childrenAlignment="row" />
-					</FormColumn>
+					
 				</Body>
 				<Footer>
 					{!isView && (
