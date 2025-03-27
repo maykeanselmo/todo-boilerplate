@@ -8,6 +8,8 @@ interface IToDosListStyles {
 	Container: ElementType<BoxProps>;
 	LoadingContainer: ElementType<BoxProps>;
 	SearchContainer: ElementType<BoxProps>;
+	TaskContainer: ElementType<BoxProps>;
+
 }
 
 const ToDosListStyles: IToDosListStyles = {
@@ -42,7 +44,17 @@ const ToDosListStyles: IToDosListStyles = {
 		[theme.breakpoints.down('sm')]: {
 			flexDirection: 'column'
 		}
-	}))
+	})),
+
+	TaskContainer: styled(Box)(({ theme }) => ({
+		width: '100%',
+		maxWidth: 600,
+		backgroundColor: theme.palette.background.paper,
+		borderRadius: theme.shape.borderRadius,
+		boxShadow: theme.shadows[2],
+		padding: theme.spacing(2),
+	})),
+	  
 };
 
 export default ToDosListStyles;
