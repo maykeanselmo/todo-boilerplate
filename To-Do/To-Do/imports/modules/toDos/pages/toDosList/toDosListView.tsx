@@ -7,24 +7,38 @@ import { ToDosListControllerContext } from './toDosListController';
 import { useNavigate } from 'react-router-dom';
 import { ComplexTable } from '/imports/ui/components/ComplexTable/ComplexTable';
 import DeleteDialog from '/imports/ui/appComponents/showDialog/custom/deleteDialog/deleteDialog';
-import { SysAppLayoutContext } from '/imports/app/appLayout';
+import AppLayoutContext, { IAppLayoutContext } from '/imports/app/appLayoutProvider/appLayoutContext';
 import ToDosListStyles from './toDosListStyles';
 import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
+import { SysDatePickerField } from '/imports/ui/components/sysFormFields/sysDatePickerField/sysDatePickerField';
+import { List } from '@mui/material';
+import TaskIcon from '@mui/icons-material/Task';
+import { ToDosModuleContext } from '../../toDosContainer';
+
+
+import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+
 
 
 const ToDosListView = () => {
 	const controller = React.useContext(ToDosListControllerContext);
-	const sysLayoutContext = React.useContext(SysAppLayoutContext);
+	const sysLayoutContext = React.useContext(AppLayoutContext);
+	const {id} = React.useContext(ToDosModuleContext);
 	const navigate = useNavigate();
   const {
     Container,
     LoadingContainer,
-    SearchContainer
+    SearchContainer,
+	TaskContainer
   } = ToDosListStyles;
 
-	const options = [{ value: '', label: 'Nenhum' }, ...(controller.schema.type.options?.() ?? [])];
+  const options = [{ value: '', label: 'Nenhum' }, ...(controller?.schema?.type?.options?.() ?? [])];
 
 	return (
 		<Container>
@@ -38,11 +52,13 @@ const ToDosListView = () => {
 				/>
 				<SysSelectField
 					name="Category"
+
 					label="Categoria"
 					options={options}
 					placeholder="Selecionar"
 					onChange={controller.onChangeCategory}
 				/>
+				
 			</SearchContainer>
 			{controller.loading ? (
 				<LoadingContainer>
@@ -50,29 +66,31 @@ const ToDosListView = () => {
 					<Typography variant="body1">Aguarde, carregando informações...</Typography>
 				</LoadingContainer>
 			) : (
-				<Box sx={{ width: '100%' }}>
-					<ComplexTable
-						data={controller.todoList}
-						schema={controller.schema}
-						onRowClick={(row) => navigate('/toDos/view/' + row.id)}
-						searchPlaceholder={'Pesquisar exemplo'}
-						onEdit={(row) => navigate('/toDos/edit/' + row._id)}
-						onDelete={(row) => {
-							DeleteDialog({
-								showDialog: sysLayoutContext.showDialog,
-								closeDialog: sysLayoutContext.closeDialog,
-								title: `Excluir dado ${row.title}`,
-								message: `Tem certeza que deseja excluir o arquivo ${row.title}?`,
-								onDeleteConfirm: () => {
-									controller.onDeleteButtonClick(row);
-									sysLayoutContext.showNotification({
-										message: 'Excluído com sucesso!'
-									});
-								}
-							});
-						}}
-					/>
-				</Box>
+				<TaskContainer>
+				<List>
+				  {controller.todoList.map((task, index) => (
+					<React.Fragment key={task._id}>
+					  <ListItem alignItems="flex-start">
+						<ListItemText
+						  primary={
+							<Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+							  {task.description}
+							</Typography>
+						  }
+						  secondary={
+							<Typography variant="body2" color="text.secondary">
+							  Criado por <strong>{task.user?.username || "Desconhecido"}</strong> — {new Date(task.date).toLocaleDateString()}
+							</Typography>
+						  }
+						/>
+						
+					  </ListItem>
+					  {index < controller.todoList.length - 1 && <Divider variant="inset" />}
+					  
+					</React.Fragment>
+				  ))}
+				</List>
+			  </TaskContainer>
 			)}
 
 			<SysFab
