@@ -83,7 +83,7 @@ const ToDosListView = () => {
 							</Typography>
 						  }
 						/>
-						
+						<SysIcon name={'edit'} onClick={() => navigate('/toDos/edit/' + task._id)}/>
 					  </ListItem>
 					  {index < controller.todoList.length - 1 && <Divider variant="inset" />}
 					  
