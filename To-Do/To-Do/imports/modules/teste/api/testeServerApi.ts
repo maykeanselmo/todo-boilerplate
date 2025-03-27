@@ -48,35 +48,35 @@ class TesteServerApi extends ProductServerBase<ITeste> {
 			});
 		});
 
-		this.addRestEndpoint(
-			'view',
-			(params, options) => {
-				console.log('Params', params);
-				console.log('options.headers', options.headers);
-				return { status: 'ok' };
-			},
-			['post']
-		);
+		// this.addRestEndpoint(
+		// 	'view',
+		// 	(params, options) => {
+		// 		console.log('Params', params);
+		// 		console.log('options.headers', options.headers);
+		// 		return { status: 'ok' };
+		// 	},
+		// 	['post']
+		// );
 
-		this.addRestEndpoint(
-			'view/:testeId',
-			(params, _options) => {
-				console.log('Rest', params);
-				if (params.testeId) {
-					return self
-						.defaultCollectionPublication(
-							{
-								_id: params.testeId
-							},
-							{}
-						)
-						.fetch();
-				} else {
-					return { ...params };
-				}
-			},
-			['get']
-		);
+		// this.addRestEndpoint(
+		// 	'view/:testeId',
+		// 	(params, _options) => {
+		// 		console.log('Rest', params);
+		// 		if (params.testeId) {
+		// 			return self
+		// 				.defaultCollectionPublication(
+		// 					{
+		// 						_id: params.testeId
+		// 					},
+		// 					{}
+		// 				)
+		// 				.fetch();
+		// 		} else {
+		// 			return { ...params };
+		// 		}
+		// 	},
+		// 	['get']
+		// );
 	}
 }
 
