@@ -17,7 +17,7 @@ import { SysLocationField } from '/imports/ui/components/sysFormFields/sysLocati
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import { SysDatePickerField } from '/imports/ui/components/sysFormFields/sysDatePickerField/sysDatePickerField';
 import TaskIcon from '@mui/icons-material/Task';
-
+import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
 const ToDosDetailView = () => {
 	const controller = useContext(ToDosDetailControllerContext);
@@ -32,6 +32,7 @@ const ToDosDetailView = () => {
     Footer,
     FormColumn
   } = ToDosDetailStyles;
+  const sysLayoutContext = React.useContext(AppLayoutContext);
 
 	return (
 		<Container>
@@ -45,9 +46,10 @@ const ToDosDetailView = () => {
 					{isCreate ? 'Adicionar Tarefa' : isEdit ? 'Editar Tarefa' : controller.document.title}
 				</Typography>
 				<IconButton
-					onClick={!isView ? controller.closePage : () => controller.changeToEdit(controller.document._id || '')}>
+					onClick={!isView ? () => sysLayoutContext.closeModal(): () => controller.changeToEdit(controller.document._id || '')}>
 					{!isView ? <SysIcon name={'close'} /> : <SysIcon name={'edit'} />}
 				</IconButton>
+				
 			</Header>
 			<SysForm
 				mode={state as 'create' | 'view' | 'edit'}
@@ -75,11 +77,7 @@ const ToDosDetailView = () => {
 					
 				</Body>
 				<Footer>
-					{!isView && (
-						<Button variant="outlined" startIcon={<SysIcon name={'close'} />} onClick={controller.closePage}>
-							Cancelar
-						</Button>
-					)}
+			
 					<SysFormButton>Salvar</SysFormButton>
 				</Footer>
 			</SysForm>
@@ -88,3 +86,4 @@ const ToDosDetailView = () => {
 };
 
 export default ToDosDetailView;
+
