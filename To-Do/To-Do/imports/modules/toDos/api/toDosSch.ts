@@ -38,6 +38,11 @@ export const toDosSch: ISchema<IToDos> = {
 		optional: false,
 		visibilityFunction: () => false
 	
+	},
+	isCompleted: {
+		type: Boolean,
+		optional: false,
+		visibilityFunction: () => false
 	}
 };
 
@@ -48,6 +53,7 @@ export interface IToDos extends IDoc {
 	description: string;
 	typeMulti: string;
 	date: Date;
-	user?: IUserProfile
-	userId: string
+	isCompleted: boolean;
+	user?: IUserProfile;
+	userId: string;
 }
