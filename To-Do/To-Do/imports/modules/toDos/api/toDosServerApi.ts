@@ -103,6 +103,7 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 	beforeInsert(doc: IToDos, context: IContext): Promise<boolean>{
 		const user = Meteor.userId();
 		if (user) doc.userId = user;
+		doc.isCompleted = false; 
 		return super.beforeInsert(doc,context);
 	}
 }
