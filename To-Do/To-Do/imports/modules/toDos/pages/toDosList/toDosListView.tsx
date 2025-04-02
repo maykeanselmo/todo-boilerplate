@@ -13,7 +13,7 @@ import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysT
 import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import { SysDatePickerField } from '/imports/ui/components/sysFormFields/sysDatePickerField/sysDatePickerField';
-import { List , Checkbox } from '@mui/material';
+import { List , Checkbox, IconButton } from '@mui/material';
 import TaskIcon from '@mui/icons-material/Task';
 import { ToDosModuleContext } from '../../toDosContainer';
 
@@ -28,6 +28,11 @@ import SysMenuItemDefault from '/imports/ui/components/sysMenu/components/sysMen
 import { ShowDialog } from '../../../../ui/appComponents/showDialog/showDialog';
 
 import { Button } from '@mui/material';
+import Switch from "@mui/material/Switch";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+
+import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 
 const ToDosListView = () => {
 	const controller = React.useContext(ToDosListControllerContext);
@@ -39,13 +44,14 @@ const ToDosListView = () => {
     Container,
     LoadingContainer,
     SearchContainer,
-	TaskContainer
+	TaskContainer,
+	RoundCheckbox 
   } = ToDosListStyles;
  
   const options = [{ value: '', label: 'Nenhum' }, ...(controller?.schema?.type?.options?.() ?? [])];
   const [checked, setChecked] = React.useState<string[]>([]);
 
- 
+
 	return (
 		<Container>
 
@@ -70,7 +76,16 @@ const ToDosListView = () => {
 				<List>
 				  {controller.todoList.map((task, index) => (
 					<React.Fragment key={task._id}>
-					  <ListItem alignItems="flex-start" >
+						<ListItem alignItems="flex-start" >
+							
+						<Checkbox
+							key={task._id}
+							icon={<RadioButtonUncheckedIcon sx={{ fontSize: 28, color: "gray" }} />}
+							checkedIcon={<CheckCircleIcon sx={{ fontSize: 28, color: "green" }} />}
+							checked={task.isCompleted}
+							onChange={() => controller.toggleTaskCompletion(task._id, task.isCompleted )}
+						/>
+					  
 						<ListItemText
 						  primary={
 							<Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
@@ -86,9 +101,16 @@ const ToDosListView = () => {
 							</Typography>
 						  }
 						/>
-					
-						<SysIcon name={'edit'} onClick={() => controller.onEditButtonClick(task._id)}/>
-						<SysIcon name={'delete'} onClick={() => controller.onDeleteButtonClick(task)}/>
+
+						<IconButton onClick={() => controller.onEditButtonClick(task._id)}>
+							<SysIcon name={'edit'} />
+						</IconButton>
+
+						<IconButton onClick={() => controller.onDeleteButtonClick(task)}>
+							<SysIcon name={'delete'} />
+						</IconButton>
+						
+						
 						
 						
 					  </ListItem>
@@ -112,3 +134,4 @@ const ToDosListView = () => {
 };
 
 export default ToDosListView;
+
