@@ -8,6 +8,7 @@ import { IToDos } from '../../api/toDosSch';
 import { toDosApi } from '../../api/toDosApi';
 import AuthContext from '../../../../app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
+import { isEqual } from 'lodash';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -21,7 +22,8 @@ interface IToDosListContollerContext {
 	onDeleteButtonClick: (row: any) => void;
 	todoList: IToDos[];
 	schema: ISchema<any>;
-	onEditButtonClick: (id:any) => void;
+	onEditButtonClick: (row: any) => void;
+	toggleTaskCompletion : (taskId:any, isCompleted:boolean) => void;
 	loading: boolean;
 	onChangeTextField: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChangeCategory: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -46,6 +48,7 @@ const ToDosListController = () => {
 	const sysLayoutContext = React.useContext(AppLayoutContext);
 
 
+
 	const navigate = useNavigate();
 
 	const { sortProperties, filter } = config;
@@ -67,6 +70,11 @@ const ToDosListController = () => {
 		};
 		
 	}, [config]);
+
+	const toggleTaskCompletion = (taskId:any, isCompleted:boolean) => {
+		const toggle = !isCompleted;
+		toDosApi.callMethod('tasks.toggleComplete', taskId, toggle);
+	}
 	
 
 	const onAddButtonClick = useCallback(() => {
@@ -91,10 +99,12 @@ const ToDosListController = () => {
 		  });
 	}, []);
 
-	const onEditButtonClick = useCallback((id:any) => {
+	const onEditButtonClick = useCallback((task: any) => {
+		
+			// if(task.userId.isEqual())
 		sysLayoutContext.showModal({
 			title: 'Editar grupo de sensores',
-			urlPath: '/toDos/edit/' + id,
+			urlPath: '/toDos/edit/' + task._id,
 			sx: {
 			  width: '60%',
 			  maxWidth: '700px',
@@ -144,6 +154,7 @@ const ToDosListController = () => {
 			schema: toDosSchReduzido,
 			loading,
 			onChangeTextField,
+			toggleTaskCompletion,
 			onChangeCategory: onSelectedCategory
 		}),
 		[toDoss, loading]
