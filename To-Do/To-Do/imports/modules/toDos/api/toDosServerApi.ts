@@ -64,40 +64,19 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 				email: user.email
 			  };
 			} 
-			console.log({...document})
+			
 			return document; 
 		  });
 
-		
-		// this.addRestEndpoint(
-		// 	'view',
-		// 	(params, options) => {
-		// 		console.log('Params', params);
-		// 		console.log('options.headers', options.headers);
-		// 		return { status: 'ok' };
-		// 	},
-		// 	['post']
-		// );
-
-		// this.addRestEndpoint(
-		// 	'view/:toDosId',
-		// 	(params, _options) => {
-		// 		console.log('Rest', params);
-		// 		if (params.toDosId) {
-		// 			return self
-		// 				.defaultCollectionPublication(
-		// 					{
-		// 						_id: params.toDosId
-		// 					},
-		// 					{}
-		// 				)
-		// 				.fetch();
-		// 		} else {
-		// 			return { ...params };
-		// 		}
-		// 	},
-		// 	['get']
-		// );
+		  this.registerMethod('tasks.toggleComplete', async (taskId: any, isCompleted:boolean)=>{
+			
+			check(taskId, String)
+			check(isCompleted, Boolean);
+			await this.collectionInstance.updateAsync(
+				{ _id: taskId },
+      			{ $set: { isCompleted } }
+			)
+		  })
 	}
 
 	beforeInsert(doc: IToDos, context: IContext): Promise<boolean>{
