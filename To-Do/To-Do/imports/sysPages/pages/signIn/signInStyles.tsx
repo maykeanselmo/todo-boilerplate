@@ -20,7 +20,7 @@ const SignInStyles: ISignInStyles = {
 		position: 'relative',
 
 		[theme.breakpoints.up('md')]: {
-			backgroundImage: 'url(/images/wireframe/background-synergia.svg)',
+			
 			backgroundSize: 'cover',
 			backgroundPosition: 'right'
 		}
@@ -30,18 +30,18 @@ const SignInStyles: ISignInStyles = {
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'space-evenly',
-		alignItems: 'center',
+		justifyContent: 'center', // Centraliza verticalmente
+		alignItems: 'center', // Centraliza horizontalmente
 		gap: theme.spacing(6),
 		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
-
+	
 		[theme.breakpoints.up('md')]: {
 			width: 'auto',
 			height: 'auto',
 			position: 'absolute',
 			top: '50%',
-			left: '10%',
-			transform: 'translateY(-50%)'
+			left: '50%', // Centraliza horizontalmente
+			transform: 'translate(-50%, -50%)' // Ajusta o alinhamento exato
 		}
 	})),
 	FormContainer: styled(Paper)(({ theme }) => ({
