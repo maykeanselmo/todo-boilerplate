@@ -45,15 +45,22 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 		// });
 		
 		this.addTransformedPublication('toDosList', async (filter = {}) => {
-			return this.defaultListCollectionPublication(filter, {
-			  projection: {
-				title: 1,
-				description: 1,
-				typeMulti: 1,
-				date: 1,
-				userId: 1 
+			return this.defaultListCollectionPublication(
+			  {
+				...filter,
+				$or: [
+				  { visibility: 'PUBLIC' }, 
+				  { visibility: 'PERSONAL', userId: Meteor.userId() } 
+				]
+			  },
+			  {
+				projection: {
+				  title: 1,
+				  description: 1,
+				  userId: 1
+				}
 			  }
-			});
+			);
 		  }, async (document: IToDos) => {
 			const user = await userprofileServerApi.findOne({ _id: document.userId });
 		  
@@ -63,11 +70,10 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 				username: user.username,
 				email: user.email
 			  };
-			} 
-			
-			return document; 
+			}
+		  
+			return document;
 		  });
-
 		  this.registerMethod('tasks.toggleComplete', async (taskId: any, isCompleted:boolean)=>{
 			
 			check(taskId, String)
