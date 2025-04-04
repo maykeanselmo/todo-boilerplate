@@ -9,6 +9,8 @@ import { toDosApi } from '../../api/toDosApi';
 import AuthContext from '../../../../app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 import { isEqual } from 'lodash';
+import ToDosDetailView from '../toDosDetail/toDosDetailView';
+import ToDosDetailController from '../toDosDetail/toDosDetailContoller';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -46,10 +48,7 @@ const ToDosListController = () => {
 	const { title,  typeMulti, date, user, userId} = toDosApi.getSchema();
 	const toDosSchReduzido = { title, typeMulti, date, user, userId };
 	const sysLayoutContext = React.useContext(AppLayoutContext);
-
-
-
-	const navigate = useNavigate();
+	const authContext= React.useContext(AuthContext);
 
 	const { sortProperties, filter } = config;
 	const sort = {
@@ -81,6 +80,7 @@ const ToDosListController = () => {
 		sysLayoutContext.showModal({
 			title: 'Editar grupo de sensores',
 			urlPath: '/toDos/create',
+		
 			sx: {
 				width: '60%',
 				maxWidth: '700px',
@@ -101,22 +101,34 @@ const ToDosListController = () => {
 
 	const onEditButtonClick = useCallback((task: any) => {
 		
-			// if(task.userId.isEqual())
-		sysLayoutContext.showModal({
-			title: 'Editar grupo de sensores',
-			urlPath: '/toDos/edit/' + task._id,
-			sx: {
-			  width: '60%',
-			  maxWidth: '700px',
-			  overflowY: 'hidden',
-	  
-			},
-			onClose: () => sysLayoutContext.closeModal()
-		  });
+			 if(task.userId===authContext.user?._id){
+				sysLayoutContext.showModal({
+					title: 'Editar grupo de sensores',
+					urlPath: '/toDos/edit/' + task._id,
+					sx: {
+					  width: '727px',
+					  maxWidth: '727px',
+					  height:'856px',
+					  overflowY: 'hidden',
+					  borderRadius: "10px"
+			  
+					},
+					onClose: () => sysLayoutContext.closeModal()
+				  });
+			 } else{
+				alert("Só o dono da tarefa pode alterá-la");
+			 }
+			 
 	}, []);
 
-	const onDeleteButtonClick = useCallback((row: any) => {
-		toDosApi.remove(row);
+	const onDeleteButtonClick = useCallback((task: any) => {
+		
+		if(task.userId===authContext.user?._id){
+			toDosApi.remove(task);
+		 } else {
+			alert("Só o dono da tarefa pode excluí-la");
+		 }
+	
 	}, []);
 
 	const onChangeTextField = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
