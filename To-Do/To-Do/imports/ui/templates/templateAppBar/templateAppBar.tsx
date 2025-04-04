@@ -3,6 +3,7 @@ import {ISysTemplateProps} from '../getTemplate';
 import {BoxProps, Typography} from '@mui/material';
 import TemplateAppBarStyles from './templateAppBarStyles';
 import SysAppBar from '../components/sysAppBar/sysAppBarController';
+import AuthContext from '/imports/app/authProvider/authContext';
 
 export interface ITemplateAppBar extends ISysTemplateProps {
   containerProps?: BoxProps;
@@ -27,17 +28,18 @@ export const TemplateAppBar: React.FC<ITemplateAppBar> = ({
   );
 };
 
+
 const BoilerplateLogo: React.FC = () => {
+
 	return (
 		<Typography
 			variant="subtitle1"
 			color={(theme) => theme.palette.sysText?.tertiary}
 			sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-			{'{ '}
-			<Typography color={(theme) => theme.palette.primary.contrastText} variant="inherit">
-				Boilerplate
-			</Typography>{' '}
-			{'}'}
+		
+			<Typography color={(theme) => theme.palette.primary.contrastText} variant="inherit" sx={{fontSize: "30px", fontWeight: 900}}>
+				ToDo List
+			</Typography>
 		</Typography>
 	);
 };
