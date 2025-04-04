@@ -19,6 +19,7 @@ import { SysDatePickerField } from '/imports/ui/components/sysFormFields/sysDate
 import TaskIcon from '@mui/icons-material/Task';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 
+
 const ToDosDetailView = () => {
 	const controller = useContext(ToDosDetailControllerContext);
 	const { state } = useContext(ToDosModuleContext);
@@ -55,24 +56,22 @@ const ToDosDetailView = () => {
 				mode={state as 'create' | 'view' | 'edit'}
 				schema={controller.schema}
 				doc={controller.document}
-				onSubmit={controller.onSubmit}
+				onSubmit={(data) => {
+					controller.onSubmit(data);
+					sysLayoutContext.closeModal();
+				}}
 				loading={controller.loading}>
 				<Body>
 					<FormColumn>
-						<SysTextField name="title" placeholder="Ex.: Tarefa XX" />
-						
-						<SysRadioButton name="typeMulti" childrenAlignment="row" size="small" />
+						<SysTextField name="title" placeholder="Dê um título para sua tarefa" />
 						<SysTextField
 							name="description"
-							placeholder="Descrição da Tarefa (3 linhas)"
-							multiline
-							rows={3}
-							maxRows={3}
-							showNumberCharactersTyped
-							max={200}
+							placeholder="Adicione aqui a descrição da tarefa"
+							multiline	
+							rows={12}
+											
 						/>
-						<SysDatePickerField name="date" placeholder="Selecione uma data" />
-						
+						<SysSelectField name="visibility" placeholder="Selecione o tipo da tarefa" />
 					</FormColumn>
 					
 				</Body>
