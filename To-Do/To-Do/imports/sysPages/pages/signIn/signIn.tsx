@@ -40,7 +40,7 @@ const SignInPage: React.FC = () => {
 	return (
 		<Container>
 			<Content>
-				<Typography variant="h1" display={'inline-flex'} gap={1}>
+			<Typography variant="h1" display={'inline-flex'} gap={1} sx={{ fontSize: "60px", fontWeight: 900 }}>
 					
 					ToDo List
 					

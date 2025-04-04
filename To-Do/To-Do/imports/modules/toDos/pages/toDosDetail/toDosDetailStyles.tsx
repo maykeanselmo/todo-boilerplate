@@ -18,6 +18,8 @@ const ToDosDetailStyles: IToDosDetailStyles = {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
+		width:'727px',
+		height:'850px',
 		gap: sysSizing.spacingFixedMd
 	})),
 	Header: styled(Box)({
@@ -42,7 +44,7 @@ const ToDosDetailStyles: IToDosDetailStyles = {
 	Footer: styled(Box)({
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'flex-end',
+		justifyContent: 'center',
 		alignItems: 'center',
 		width: '100%',
 		gap: sysSizing.spacingRemMd,

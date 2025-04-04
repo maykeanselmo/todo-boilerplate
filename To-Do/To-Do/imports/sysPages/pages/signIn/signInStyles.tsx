@@ -15,7 +15,7 @@ const SignInStyles: ISignInStyles = {
 	Container: styled(Box)(({ theme }) => ({
 		minHeight: '100vh',
 		width: '100%',
-		backgroundColor: theme.palette.primary.main,
+		backgroundColor: theme.palette.primary.light,
 		color: theme.palette.primary.contrastText,
 		position: 'relative',
 
@@ -30,8 +30,8 @@ const SignInStyles: ISignInStyles = {
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center', // Centraliza verticalmente
-		alignItems: 'center', // Centraliza horizontalmente
+		justifyContent: 'center', 
+		alignItems: 'center', 
 		gap: theme.spacing(6),
 		padding: `${sysSizing.spacingFixedLg} ${sysSizing.spacingFixedXl}`,
 	
@@ -40,8 +40,8 @@ const SignInStyles: ISignInStyles = {
 			height: 'auto',
 			position: 'absolute',
 			top: '50%',
-			left: '50%', // Centraliza horizontalmente
-			transform: 'translate(-50%, -50%)' // Ajusta o alinhamento exato
+			left: '50%', 
+			transform: 'translate(-50%, -50%)' 
 		}
 	})),
 	FormContainer: styled(Paper)(({ theme }) => ({

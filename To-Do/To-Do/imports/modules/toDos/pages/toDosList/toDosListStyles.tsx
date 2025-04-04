@@ -1,15 +1,16 @@
 import { ElementType } from 'react';
 import { styled } from '@mui/material/styles';
-import  Box,{ BoxProps } from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import { sysSizing } from '/imports/ui/materialui/styles';
-import {SysSectionPaddingXY} from "/imports/ui/layoutComponents/sysLayoutComponents";
+import { SysSectionPaddingXY } from '/imports/ui/layoutComponents/sysLayoutComponents';
+import { Checkbox, CheckboxProps } from '@mui/material';
 
 interface IToDosListStyles {
 	Container: ElementType<BoxProps>;
 	LoadingContainer: ElementType<BoxProps>;
 	SearchContainer: ElementType<BoxProps>;
 	TaskContainer: ElementType<BoxProps>;
-
+	RoundCheckbox: ElementType<CheckboxProps>;
 }
 
 const ToDosListStyles: IToDosListStyles = {
@@ -22,7 +23,7 @@ const ToDosListStyles: IToDosListStyles = {
 		height: '100vh',
 		overflow: 'auto',
 		gap: sysSizing.spacingFixedMd,
-    marginBottom: sysSizing.contentFabDistance
+		marginBottom: sysSizing.contentFabDistance
 	})),
 	LoadingContainer: styled(Box)(({ theme }) => ({
 		width: '100%',
@@ -45,16 +46,23 @@ const ToDosListStyles: IToDosListStyles = {
 			flexDirection: 'column'
 		}
 	})),
-
 	TaskContainer: styled(Box)(({ theme }) => ({
 		width: '100%',
 		maxWidth: 600,
 		backgroundColor: theme.palette.background.paper,
 		borderRadius: theme.shape.borderRadius,
-		boxShadow: theme.shadows[2],
+		boxShadow: theme.shadows[1],
 		padding: theme.spacing(2),
+		marginBottom: theme.spacing(1.5),
+		display: 'flex',
+		alignItems: 'center'
 	})),
-	  
+	RoundCheckbox: styled(Checkbox)({
+		'& .MuiSvgIcon-root': {
+			borderRadius: '50%',
+		},
+		marginRight: 8
+	}),
 };
 
 export default ToDosListStyles;
