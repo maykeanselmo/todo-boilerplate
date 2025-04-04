@@ -2,131 +2,115 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { SysFab } from '/imports/ui/components/sysFab/sysFab';
-import { ToDosListControllerContext } from './toDosListController';
-import { useNavigate } from 'react-router-dom';
-import { ComplexTable } from '/imports/ui/components/ComplexTable/ComplexTable';
-import DeleteDialog from '/imports/ui/appComponents/showDialog/custom/deleteDialog/deleteDialog';
-import AppLayoutContext, { IAppLayoutContext } from '/imports/app/appLayoutProvider/appLayoutContext';
-import ToDosListStyles from './toDosListStyles';
-import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
-import { SysSelectField } from '/imports/ui/components/sysFormFields/sysSelectField/sysSelectField';
-import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
-import { SysDatePickerField } from '/imports/ui/components/sysFormFields/sysDatePickerField/sysDatePickerField';
-import { List , Checkbox, IconButton } from '@mui/material';
-import TaskIcon from '@mui/icons-material/Task';
-import { ToDosModuleContext } from '../../toDosContainer';
-
-
+import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import { SysButton } from '/imports/ui/components/SimpleFormFields/SysButton/SysButton';
-import SysMenuItemDefault from '/imports/ui/components/sysMenu/components/sysMenuItemDefault';
-import { ShowDialog } from '../../../../ui/appComponents/showDialog/showDialog';
-
-import { Button } from '@mui/material';
-import Switch from "@mui/material/Switch";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-
-import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
+import IconButton from '@mui/material/IconButton';
+import Checkbox from '@mui/material/Checkbox';
+import { SysFab } from '/imports/ui/components/sysFab/sysFab';
+import { ToDosListControllerContext } from './toDosListController';
+import { useNavigate } from 'react-router-dom';
+import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
+import ToDosListStyles from './toDosListStyles';
+import SysTextField from '/imports/ui/components/sysFormFields/sysTextField/sysTextField';
+import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import ListItemButton from '@mui/material/ListItemButton';
 
 const ToDosListView = () => {
 	const controller = React.useContext(ToDosListControllerContext);
 	const sysLayoutContext = React.useContext(AppLayoutContext);
-	const {id} = React.useContext(ToDosModuleContext);
 	const navigate = useNavigate();
 
-  const {
-    Container,
-    LoadingContainer,
-    SearchContainer,
-	TaskContainer,
-	RoundCheckbox 
-  } = ToDosListStyles;
- 
-  const options = [{ value: '', label: 'Nenhum' }, ...(controller?.schema?.type?.options?.() ?? [])];
-  const [checked, setChecked] = React.useState<string[]>([]);
-
+	const {
+		Container,
+		LoadingContainer,
+		SearchContainer,
+		TaskContainer,
+		RoundCheckbox
+	} = ToDosListStyles;
 
 	return (
 		<Container>
+			<Typography variant="h5">Lista de Tarefas</Typography>
 
-			<Typography variant="h5">Lista de Itens</Typography>
 			<SearchContainer>
 				<SysTextField
 					name="search"
 					placeholder="Procurar tarefa(s)"
 					onChange={controller.onChangeTextField}
-					startAdornment={<SysIcon name={'search'} />}
+					startAdornment={<SysIcon name="search" />}
 				/>
-				
 			</SearchContainer>
+
 			{controller.loading ? (
 				<LoadingContainer>
 					<CircularProgress />
 					<Typography variant="body1">Aguarde, carregando informações...</Typography>
 				</LoadingContainer>
 			) : (
-				<TaskContainer>
 				
-				<List>
-				  {controller.todoList.map((task, index) => (
-					<React.Fragment key={task._id}>
-						<ListItem alignItems="flex-start" >
+				<List sx={{ width: '100%', padding: 0 }}>
+					<Divider variant="fullWidth" component="li" />
+					{controller.todoList.map((task, index) => (
+						<React.Fragment key={task._id}>
 							
-						<Checkbox
-							key={task._id}
-							icon={<RadioButtonUncheckedIcon sx={{ fontSize: 28, color: "gray" }} />}
-							checkedIcon={<CheckCircleIcon sx={{ fontSize: 28, color: "green" }} />}
-							checked={task.isCompleted}
-							onChange={() => controller.toggleTaskCompletion(task._id, task.isCompleted )}
-						/>
-					  
-						<ListItemText
-						  primary={
-							<Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-								{task.isCompleted
-        							? <del>{task.title}</del> 
-        							: task.title                
-      						}
-							</Typography>
-						  }
-						  secondary={
-							<Typography variant="body2" color="text.secondary">
-							  Criado por: <u>{task.user?.username || "Desconhecido"}</u> — {new Date(task.date).toLocaleDateString()}
-							</Typography>
-						  }
-						/>
-
-						<IconButton onClick={() => controller.onEditButtonClick(task._id)}>
-							<SysIcon name={'edit'} />
-						</IconButton>
-
-						<IconButton onClick={() => controller.onDeleteButtonClick(task)}>
-							<SysIcon name={'delete'} />
-						</IconButton>
+								<ListItem
+									disablePadding
+									secondaryAction={
+										<>
+											<IconButton onClick={() => controller.onEditButtonClick(task)}>
+												<SysIcon name="edit" />
+											</IconButton>
+											<IconButton onClick={() => controller.onDeleteButtonClick(task)}>
+												<SysIcon name="delete" />
+											</IconButton>
+										</>
+									}
+								>
+									<ListItemButton sx={{ paddingLeft: 1 }}>
+										<RoundCheckbox
+											checked={task.isCompleted}
+											onChange={() => controller.toggleTaskCompletion(task._id, task.isCompleted)}
+											icon={<RadioButtonUncheckedIcon sx={{ fontSize: 28, color: 'gray' }} />}
+											checkedIcon={<CheckCircleIcon sx={{ fontSize: 28, color: 'green' }} />}
+										/>
+										<ListItemText
+											primary={
+												<Typography
+													variant="h6"
+													sx={{
+														fontWeight: 'bold',
+														color: 'primary.dark',
+														textDecoration: task.isCompleted ? 'line-through' : 'none',
+													}}
+												>
+													{task.title}
+												</Typography>
+											}
+											secondary={
+												<Typography variant="body2" color="text.secondary">
+													Criado por: <u>{task.user?.username || 'Você'}</u>
+												</Typography>
+											}
+										/>
+									</ListItemButton>
+								</ListItem>
 						
-						
-						
-						
-					  </ListItem>
-					  {index < controller.todoList.length - 1 && <Divider variant="inset" />}
-					  
-					</React.Fragment>
-				  ))}
+								<Divider variant="fullWidth" component="li" />
+							
+						</React.Fragment>
+					))}
 				</List>
-			  </TaskContainer>
-			)}			
+			)}
 
 			<SysFab
 				variant="extended"
 				text="Adicionar Tarefa"
-				startIcon={<SysIcon name={'add'} />}
-				fixed={true}
+				startIcon={<SysIcon name="add" />}
+				fixed
 				onClick={controller.onAddButtonClick}
 			/>
 		</Container>
@@ -134,4 +118,3 @@ const ToDosListView = () => {
 };
 
 export default ToDosListView;
-
