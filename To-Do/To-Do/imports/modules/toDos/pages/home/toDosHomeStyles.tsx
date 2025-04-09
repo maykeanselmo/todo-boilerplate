@@ -2,11 +2,13 @@ import { ElementType } from 'react';
 import { styled } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 import {SysSectionPaddingXY} from "/imports/ui/layoutComponents/sysLayoutComponents";
+import { Checkbox, CheckboxProps } from '@mui/material';
 
 interface IHomeStyles {
     Container: ElementType<BoxProps>;
     Header: ElementType<BoxProps>;
     RowButtons: ElementType<BoxProps>;
+    RoundCheckbox: ElementType<CheckboxProps>;
 }
 
 const ToDosHomeStyles: IHomeStyles = {
@@ -40,7 +42,19 @@ const ToDosHomeStyles: IHomeStyles = {
         [theme.breakpoints.down('sm')]: {
             columnGap: '1rem'
         }
-    }))
+    })),
+            RoundCheckbox: styled(Checkbox)(({ theme }) => ({
+                '& .MuiSvgIcon-root': {
+                    borderRadius: '50%',
+                    backgroundColor: theme.palette.common.white,
+                    color: theme.palette.common.black,
+                },
+                '&.Mui-checked .MuiSvgIcon-root': {
+                    backgroundColor: theme.palette.common.black,
+                    color: theme.palette.common.white,
+                },
+                marginRight: 8
+            }))
 };
 
 export default ToDosHomeStyles;

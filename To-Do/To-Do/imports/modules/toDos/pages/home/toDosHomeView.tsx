@@ -20,6 +20,7 @@ import { toDosApi } from '../../api/toDosApi';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 import { ToDosModuleContext } from '../../toDosContainer';
 import { IToDos } from '../../api/toDosSch';
+import Cursor from 'quill/blots/cursor';
 
 const ToDosHomeView: React.FC = () => {
 	const { Container, Header, RoundCheckbox } = toDosHomeStyles;
@@ -65,16 +66,19 @@ const ToDosHomeView: React.FC = () => {
 					<Divider variant="fullWidth" component="li" />
 					{toDoss.map((task) => (
 						<React.Fragment key={task._id}>
-							<ListItem disablePadding>
-								<ListItemButton sx={{ paddingLeft: 1 }}>
-									<Checkbox
-										checked={!!task.isCompleted}
-										icon={<RadioButtonUncheckedIcon sx={{ fontSize: 28, color: 'gray' }} />}
-										checkedIcon={<CheckCircleIcon sx={{ fontSize: 28, color: 'green' }} />}
-										disableRipple
-										disabled
-									/>
+							<ListItem disablePadding >
+								<ListItemButton sx={{ paddingLeft: 1 , cursor:'default'}}>
+
+								<RoundCheckbox
+									checked={task.isCompleted}
+									icon={<RadioButtonUncheckedIcon sx={{ fontSize: 28, color: 'gray' }} />}
+									checkedIcon={<CheckCircleIcon sx={{ fontSize: 28, color: 'green' }} />}
+									disableRipple
+									disabled
+								/>
+								
 									<ListItemText
+										
 										primary={
 											<Typography
 												variant="h6"
