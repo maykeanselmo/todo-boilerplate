@@ -26,15 +26,16 @@ export const toDosSch: ISchema<IToDos> = {
 	},
 	userId: {
 		type: String,
-		optional: false,
-		visibilityFunction: () => false
+		optional: true
 	
 	},
+
 	isCompleted: {
 		type: Boolean,
 		optional: false,
 		visibilityFunction: () => false
 	},
+	
 	visibility:{
 		type: String,
 		label: 'Tipo',
@@ -51,9 +52,9 @@ export interface IToDos extends IDoc {
 	
 	title: string;
 	description: string;
-	date: Date;
 	isCompleted: boolean;
-	taskVisibility: TaskVisibility ;
+	visibility: TaskVisibility ;
 	user?: IUserProfile;
 	userId: string;
+	teste: string
 }
