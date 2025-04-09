@@ -57,12 +57,25 @@ const ToDosListStyles: IToDosListStyles = {
 		display: 'flex',
 		alignItems: 'center'
 	})),
-	RoundCheckbox: styled(Checkbox)({
+
+	RoundCheckbox: styled(Checkbox)(({ theme }) => ({
 		'& .MuiSvgIcon-root': {
 			borderRadius: '50%',
+			backgroundColor: theme.palette.common.white,
+			color: theme.palette.common.black,
+		},
+		'&.Mui-checked .MuiSvgIcon-root': {
+			backgroundColor: theme.palette.common.black,
+			color: theme.palette.common.white,
 		},
 		marginRight: 8
-	}),
+	}))
+	// RoundCheckbox: styled(Checkbox)({
+	// 	'& .MuiSvgIcon-root': {
+	// 		borderRadius: '50%',
+	// 	},
+	// 	marginRight: 8
+	// }),
 };
 
 export default ToDosListStyles;

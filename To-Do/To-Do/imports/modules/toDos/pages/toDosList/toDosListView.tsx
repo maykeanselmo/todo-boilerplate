@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -8,6 +8,9 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { SysFab } from '/imports/ui/components/sysFab/sysFab';
 import { ToDosListControllerContext } from './toDosListController';
 import { useNavigate } from 'react-router-dom';
@@ -24,13 +27,20 @@ const ToDosListView = () => {
 	const sysLayoutContext = React.useContext(AppLayoutContext);
 	const navigate = useNavigate();
 
-	const {
-		Container,
-		LoadingContainer,
-		SearchContainer,
-		TaskContainer,
-		RoundCheckbox
-	} = ToDosListStyles;
+	const { Container, LoadingContainer, SearchContainer, TaskContainer, RoundCheckbox } = ToDosListStyles;
+
+	
+	const [anchorEl, setAnchorEl] = useState<{ [key: string]: null | HTMLElement }>({});
+	
+
+	const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>, taskId: string) => {
+		setAnchorEl({ ...anchorEl, [taskId]: event.currentTarget });
+	};
+
+	
+	const handleMenuClose = (taskId: string) => {
+		setAnchorEl({ ...anchorEl, [taskId]: null });
+	};
 
 	return (
 		<Container>
@@ -51,32 +61,25 @@ const ToDosListView = () => {
 					<Typography variant="body1">Aguarde, carregando informações...</Typography>
 				</LoadingContainer>
 			) : (
-				
 				<List sx={{ width: '100%', padding: 0 }}>
 					<Divider variant="fullWidth" component="li" />
-					{controller.todoList.map((task, index) => (
-						<React.Fragment key={task._id}>
+						{controller.todoList.map((task, index) => {
+
+					
 							
-								<ListItem
-									disablePadding
-									secondaryAction={
-										<>
-											<IconButton onClick={() => controller.onEditButtonClick(task)}>
-												<SysIcon name="edit" />
-											</IconButton>
-											<IconButton onClick={() => controller.onDeleteButtonClick(task)}>
-												<SysIcon name="delete" />
-											</IconButton>
-										</>
-									}
-								>
+						const taskId = task._id ?? ''; 
+					
+						return (
+							<React.Fragment key={taskId}>
+								<ListItem disablePadding>
 									<ListItemButton sx={{ paddingLeft: 1 }}>
 										<RoundCheckbox
 											checked={task.isCompleted}
-											onChange={() => controller.toggleTaskCompletion(task._id, task.isCompleted)}
+											onChange={(e) => controller.toggleTaskCompletion(taskId, e.target.checked)}
 											icon={<RadioButtonUncheckedIcon sx={{ fontSize: 28, color: 'gray' }} />}
 											checkedIcon={<CheckCircleIcon sx={{ fontSize: 28, color: 'green' }} />}
 										/>
+										
 										<ListItemText
 											primary={
 												<Typography
@@ -92,17 +95,49 @@ const ToDosListView = () => {
 											}
 											secondary={
 												<Typography variant="body2" color="text.secondary">
-													Criado por: <u>{task.user?.username || 'Você'}</u>
+													
+													Criado por: <u>{task.user?.username || 'Desconhecido'}</u>
 												</Typography>
 											}
 										/>
 									</ListItemButton>
+
+									<IconButton onClick={(event) => handleMenuOpen(event, taskId)}>
+										<MoreVertIcon />
+									</IconButton>
+
+									<Menu
+										anchorEl={anchorEl[taskId]}
+										open={Boolean(anchorEl[taskId])}
+										onClose={() => handleMenuClose(taskId)}
+									>
+										<MenuItem
+											onClick={() => {
+												console.log("no botão edit",task)
+												controller.onEditButtonClick(task);
+												handleMenuClose(taskId);
+											}}
+										>
+											<SysIcon name="edit" sx={{ marginRight: 1 }} />
+											Editar
+										</MenuItem>
+										<MenuItem
+											onClick={() => {
+												controller.onDeleteButtonClick(task);
+												handleMenuClose(taskId);
+											}}
+											sx={{ color: 'red' }}
+										>
+											<SysIcon name="delete" sx={{ marginRight: 1 }} />
+											Excluir
+										</MenuItem>
+									</Menu>
 								</ListItem>
-						
+
 								<Divider variant="fullWidth" component="li" />
-							
-						</React.Fragment>
-					))}
+							</React.Fragment>
+						);
+					})}
 				</List>
 			)}
 
