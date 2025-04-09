@@ -1,3 +1,4 @@
+import toDosHomeView from '../pages/home/toDosHomeView';
 import ToDosContainer from '../toDosContainer';
 import { Recurso } from './recursos';
 import { IRoute } from '/imports/modules/modulesTypings';
@@ -20,6 +21,13 @@ export const toDosRouterList: (IRoute | null)[] = [
 	{
 		path: '/toDos',
 		component: ToDosContainer,
+		isProtected: true,
+		resources: [Recurso.EXAMPLE_VIEW]
+	},
+
+	{
+		path: '/',
+		component: toDosHomeView,
 		isProtected: true,
 		resources: [Recurso.EXAMPLE_VIEW]
 	}
