@@ -11,6 +11,7 @@ import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
 import { isEqual } from 'lodash';
 import ToDosDetailView from '../toDosDetail/toDosDetailView';
 import ToDosDetailController from '../toDosDetail/toDosDetailContoller';
+import ToDosContainer from '../../toDosContainer';
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
@@ -71,8 +72,8 @@ const ToDosListController = () => {
 	}, [config]);
 
 	const toggleTaskCompletion = (taskId:any, isCompleted:boolean) => {
-		const toggle = !isCompleted;
-		toDosApi.callMethod('tasks.toggleComplete', taskId, toggle);
+		
+		toDosApi.callMethod('tasks.toggleComplete', taskId, isCompleted);
 	}
 	
 
