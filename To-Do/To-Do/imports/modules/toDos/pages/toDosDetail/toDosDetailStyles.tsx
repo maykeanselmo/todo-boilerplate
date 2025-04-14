@@ -16,8 +16,8 @@ const ToDosDetailStyles: IToDosDetailStyles = {
 	Container: styled(SysSectionPaddingXY)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center', // ou flex-start, se preferir
-		alignItems: 'center', // AQUI É O PULO DO GATO
+		justifyContent: 'center', 
+		alignItems: 'center', 
 		width: '100%',
 		maxWidth: '100%',
 		gap: sysSizing.spacingFixedMd,
