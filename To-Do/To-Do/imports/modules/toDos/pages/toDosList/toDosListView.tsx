@@ -21,6 +21,8 @@ import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import ListItemButton from '@mui/material/ListItemButton';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 const ToDosListView = () => {
 	const controller = React.useContext(ToDosListControllerContext);
@@ -50,7 +52,14 @@ const ToDosListView = () => {
 				<SysTextField
 					name="search"
 					placeholder="Procurar tarefa(s)"
-					onChange={controller.onChangeTextField}
+					onChange={(e) => {
+						controller.onChangeTextField(e)
+						controller.setConfig((prev) => ({
+							...prev,
+							page:0
+						}));
+					
+					}}
 					startAdornment={<SysIcon name="search" />}
 				/>
 			</SearchContainer>
@@ -58,14 +67,14 @@ const ToDosListView = () => {
 			{controller.loading ? (
 				<LoadingContainer>
 					<CircularProgress />
-					<Typography variant="body1">Aguarde, carregando informações...</Typography>
+					<Typography variant="body1"></Typography>
 				</LoadingContainer>
 			) : (
 				<List sx={{ width: '100%', padding: 0 }}>
 					<Divider variant="fullWidth" component="li" />
 						{controller.todoList.map((task, index) => {
 
-					
+
 							
 						const taskId = task._id ?? ''; 
 					
@@ -140,6 +149,32 @@ const ToDosListView = () => {
 					})}
 				</List>
 			)}
+					<Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 2 }}>
+						<Button
+							variant="contained"
+							disabled={controller.config.page === 0}
+							onClick={() =>
+							controller.setConfig((prev) => ({
+								...prev,
+								page: Math.max(prev.page - 1, 0)
+							}))
+							}
+						>
+							Anterior
+						</Button>
+						<Button
+							variant="contained"
+							onClick={() =>
+							controller.setConfig((prev) => ({
+								...prev,
+								page: prev.page + 1
+							}))
+							}
+							disabled={controller.todoList.length < 4} 
+						>
+							Próxima
+						</Button>
+				</Stack>
 
 			<SysFab
 				variant="extended"

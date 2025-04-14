@@ -1,23 +1,20 @@
 import React, { useCallback, useMemo } from 'react';
 import ToDosListView from './toDosListView';
-import { nanoid } from 'nanoid';
-import { useNavigate } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import { ISchema } from '/imports/typings/ISchema';
 import { IToDos } from '../../api/toDosSch';
 import { toDosApi } from '../../api/toDosApi';
 import AuthContext from '../../../../app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
-import { isEqual } from 'lodash';
-import ToDosDetailView from '../toDosDetail/toDosDetailView';
-import ToDosDetailController from '../toDosDetail/toDosDetailContoller';
-import ToDosContainer from '../../toDosContainer';
+
 
 interface IInitialConfig {
 	sortProperties: { field: string; sortAscending: boolean };
 	filter: Object;
 	searchBy: string | null;
 	viewComplexTable: boolean;
+	page: number; 
+	limit?: number;
 }
 
 interface IToDosListContollerContext {
@@ -30,6 +27,9 @@ interface IToDosListContollerContext {
 	loading: boolean;
 	onChangeTextField: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onChangeCategory: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	config: IInitialConfig;
+	setConfig: React.Dispatch<React.SetStateAction<IInitialConfig>>;
+	
 }
 
 export const ToDosListControllerContext = React.createContext<IToDosListContollerContext>(
@@ -40,7 +40,8 @@ const initialConfig = {
 	sortProperties: { field: 'createdat', sortAscending: true },
 	filter: {},
 	searchBy: null,
-	viewComplexTable: false
+	viewComplexTable: false,
+	page: 0,
 };
 
 const ToDosListController = () => {
@@ -57,12 +58,19 @@ const ToDosListController = () => {
 	};
 
 	const { loading, toDoss } = useTracker(() => {
+		const { sortProperties, page = 0, limit = 4 } = config;
 		const subHandle = toDosApi.subscribe('toDosList', filter, {
-			sort
+			sort,
+			page: config.page
 		})??null;
 		
 		const toDoss = subHandle?.ready() ? toDosApi.find(filter, { sort }).fetch() : [];
-		console.log("Dados recebidos do servidor:", toDoss);
+		
+		if (subHandle?.ready()) {
+			toDoss.forEach((task, i) => {
+			  console.log(`📌 Task #${i}:`, task);
+			});
+		  }
 		return {
 			toDoss,
 			loading: !!subHandle && !subHandle.ready(),
@@ -75,7 +83,6 @@ const ToDosListController = () => {
 		
 		toDosApi.callMethod('tasks.toggleComplete', taskId, isCompleted);
 	}
-	
 
 	const onAddButtonClick = useCallback(() => {
 		sysLayoutContext.showModal({
@@ -160,6 +167,7 @@ const ToDosListController = () => {
 
 	const providerValues: IToDosListContollerContext = useMemo(
 		() => ({
+			
 			onAddButtonClick,
 			onDeleteButtonClick,
 			onEditButtonClick,
@@ -168,7 +176,10 @@ const ToDosListController = () => {
 			loading,
 			onChangeTextField,
 			toggleTaskCompletion,
-			onChangeCategory: onSelectedCategory
+			onChangeCategory: onSelectedCategory,
+			config,
+			setConfig
+			
 		}),
 		[toDoss, loading]
 	);

@@ -8,6 +8,9 @@ import { IContext } from '/imports/typings/IContext';
 // endregion
 
 class ToDosServerApi extends ProductServerBase<IToDos> {
+
+
+
 	constructor() {
 		super('toDos', toDosSch, {
 			resources: Recurso
@@ -46,7 +49,12 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 		// 	});
 		// });
 		
-		this.addTransformedPublication('toDosList', async (filter = {}) => {
+		this.addTransformedPublication('toDosList', async (filter = {}, options: {page?:number}) => {
+
+			const page = options.page ?? 0;
+			const pageSize = 4;
+    		const skip = page * pageSize;
+
 			return this.defaultListCollectionPublication(
 			  {
 				...filter,
@@ -56,10 +64,13 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 				]
 			  },
 			  {
+				...options,
+				limit: pageSize,
+				skip,
+				sort:{createdat:-1},
 				projection: {
 					title: 1,
 					description: 1,
-					date: 1,
 					userId: 1,
 					isCompleted: 1
 				}
@@ -68,7 +79,7 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 			);
 		  }, async (document: IToDos) => {
 			const user = await userprofileServerApi.findOne({ _id: document.userId });
-		  
+			
 			if (user) {
 			  document.user = {
 				_id: user._id,
@@ -105,7 +116,7 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 			);
 		}, async (document: IToDos) => {
 			const user = await userprofileServerApi.findOne({ _id: document.userId });
-		
+			console.log("user do 'toDosLastFive' ", user)
 			if (user) {
 				document.user = {
 					_id: user._id,
@@ -133,7 +144,6 @@ class ToDosServerApi extends ProductServerBase<IToDos> {
 	beforeInsert(doc: IToDos, context: IContext): Promise<boolean>{
 		const userId = Meteor.userId();
 		if (userId) {
-			doc.teste = userId;
 			doc.userId = userId;
 		}
 		doc.isCompleted = false; 
