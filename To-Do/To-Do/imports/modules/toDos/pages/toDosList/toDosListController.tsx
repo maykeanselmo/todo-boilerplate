@@ -90,18 +90,12 @@ const ToDosListController = () => {
 			urlPath: '/toDos/create',
 		
 			sx: {
-				width: '60%',
-				maxWidth: '700px',
-				overflowY: 'hidden',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				margin: 'auto',
-				position: 'fixed', 
-				top: '50%',
-				left: '50%', 
-				transform: 'translate(-50%, -50%)', 
-				borderRadius: 3
+				width: '90%',
+				maxWidth: '727px',
+				height: '90vh',
+				maxHeight: '856px',
+				overflowY: 'auto',
+				borderRadius: '10px',
 			},
 			onClose: () => sysLayoutContext.closeModal()
 		  });
@@ -114,11 +108,12 @@ const ToDosListController = () => {
 					title: 'Editar grupo de sensores',
 					urlPath: '/toDos/edit/' + task._id,
 					sx: {
-					  width: '727px',
-					  maxWidth: '727px',
-					  height:'856px',
-					  overflowY: 'hidden',
-					  borderRadius: "10px"
+						width: '90%',
+						maxWidth: '727px',
+						height: '90vh',
+						maxHeight: '856px',
+						overflowY: 'auto',
+						borderRadius: '10px',
 			  
 					},
 					onClose: () => sysLayoutContext.closeModal()

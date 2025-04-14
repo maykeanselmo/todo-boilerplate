@@ -13,22 +13,31 @@ interface IToDosDetailStyles {
 }
 
 const ToDosDetailStyles: IToDosDetailStyles = {
-	Container: styled(SysSectionPaddingXY)(() => ({
+	Container: styled(SysSectionPaddingXY)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
-		width:'727px',
-		height:'850px',
-		gap: sysSizing.spacingFixedMd
+		width: '90%',
+		maxWidth: '727px',
+		height: '90vh',
+		maxHeight: '850px',
+		overflowY: 'auto',
+		gap: sysSizing.spacingFixedMd,
+		[theme.breakpoints.down('sm')]: {
+			width: '95%',
+			padding: theme.spacing(2),
+		}
 	})),
-	Header: styled(Box)({
+	Header: styled(Box)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		width: '100%'
-	}),
+		width: '100%',
+		flexWrap: 'wrap',
+		gap: theme.spacing(1),
+	})),
 	Body: styled(Box)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'row',
@@ -38,26 +47,34 @@ const ToDosDetailStyles: IToDosDetailStyles = {
 		gap: '64px',
 		[theme.breakpoints.down('md')]: {
 			flexDirection: 'column',
-			gap: sysSizing.spacingFixedMd
+			gap: sysSizing.spacingFixedMd,
 		}
 	})),
-	Footer: styled(Box)({
+	Footer: styled(Box)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'center',
 		alignItems: 'center',
 		width: '100%',
 		gap: sysSizing.spacingRemMd,
-		marginTop: '40px'
-	}),
-	FormColumn: styled(Box)({
+		marginTop: '40px',
+		flexWrap: 'wrap',
+		[theme.breakpoints.down('sm')]: {
+			flexDirection: 'column',
+			gap: theme.spacing(2),
+		}
+	})),
+	FormColumn: styled(Box)(({ theme }) => ({
 		width: '100%',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
-		gap: sysSizing.spacingFixedLg
-	})
+		gap: sysSizing.spacingFixedLg,
+		paddingBottom: theme.spacing(2)
+	}))
+
+
 };
 
 export default ToDosDetailStyles;
