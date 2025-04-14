@@ -79,15 +79,30 @@ export const PasswordRecovery = (props: IDefaultContainerProps) => {
 	return (
 		<Container>
 			<Content>
-				<Typography variant="h1" display={'inline-flex'} gap={1}>
-					<Typography variant="inherit" color={(theme) => theme.palette.sysText?.tertiary}>
-						{'{'}
-					</Typography>
-					Boilerplate
-					<Typography variant="inherit" color="sysText.tertiary">
-						{'}'}
-					</Typography>
-				</Typography>
+
+			<Box
+				display="flex"
+				flexDirection="column"
+				alignItems="center"
+				justifyContent="center"
+				gap={2}
+				sx={{ maxWidth: 300, mx: 'auto', mt: 4 }}
+				>
+				<Box
+					component="img"
+					src="/images/forgot-password.png"
+					alt="Ícone de cadastro"
+					sx={{
+					width: '100%',
+					maxWidth: 200,
+					height: 'auto',
+					objectFit: 'contain',
+					}}
+				/>
+
+				
+			</Box>
+				
 
 				<FormContainer>
 					<Typography variant="h5" color={(theme) => theme.palette.sysText?.title}>
@@ -143,7 +158,6 @@ export const PasswordRecovery = (props: IDefaultContainerProps) => {
 					</Button>
 				</FormContainer>
 
-				<Box component="img" src="/images/wireframe/synergia-logo.svg" sx={{ width: '100%', maxWidth: '400px' }} />
 			</Content>
 		</Container>
 	);
