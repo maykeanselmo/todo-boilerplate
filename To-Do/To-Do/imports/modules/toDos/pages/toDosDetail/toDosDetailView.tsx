@@ -56,10 +56,9 @@ const ToDosDetailView = () => {
 				mode={state as 'create' | 'view' | 'edit'}
 				schema={controller.schema}
 				doc={controller.document}
-				onSubmit={(data) => {
-					controller.onSubmit(data);
-					sysLayoutContext.closeModal();
-				}}
+				onSubmit={controller.onSubmit}
+				
+			
 				loading={controller.loading}>
 				<Body>
 					<FormColumn>

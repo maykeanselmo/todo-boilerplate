@@ -63,7 +63,7 @@ const ToDosDetailController = () => {
 					message: `Erro ao realizar a operação: ${e.reason}`
 				});
 			}			
-			
+
 		});
 	}, []);
 
