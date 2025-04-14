@@ -7,19 +7,19 @@ export const signInSchema: ISchema<ISignIn> = {
 		type: 'String',
 		label: 'Email',
 		optional: false,
-		defaultValue: 'admin@mrb.com',
-		validationFunction: (value: string) => {
-			if (!value) return undefined;
-			const email = validarEmail(value);
-			if (!email) return 'Email inválido';
-			return undefined;
-		}
+		//defaultValue: 'admin@mrb.com',
+		// validationFunction: (value: string) => {
+		// 	if (!value) return undefined;
+		// 	const email = validarEmail(value);
+		// 	if (!email) return 'Email inválido';
+		// 	return undefined;
+		// }
 	},
 	password: {
 		type: 'String',
 		label: 'Senha',
 		optional: false,
-		defaultValue: 'admin@mrb.com'
+		//defaultValue: 'admin@mrb.com'
 	}
 };
 
