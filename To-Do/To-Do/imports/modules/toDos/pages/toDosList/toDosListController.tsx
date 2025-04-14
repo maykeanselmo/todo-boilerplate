@@ -96,6 +96,12 @@ const ToDosListController = () => {
 				maxHeight: '856px',
 				overflowY: 'auto',
 				borderRadius: '10px',
+				position: 'fixed',
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)',
+				display: 'flex',
+				flexDirection: 'column',
 			},
 			onClose: () => sysLayoutContext.closeModal()
 		  });
@@ -114,6 +120,12 @@ const ToDosListController = () => {
 						maxHeight: '856px',
 						overflowY: 'auto',
 						borderRadius: '10px',
+						position: 'fixed',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+						display: 'flex',
+						flexDirection: 'column',
 			  
 					},
 					onClose: () => sysLayoutContext.closeModal()

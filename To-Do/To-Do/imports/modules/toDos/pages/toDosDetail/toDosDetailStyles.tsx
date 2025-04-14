@@ -16,19 +16,16 @@ const ToDosDetailStyles: IToDosDetailStyles = {
 	Container: styled(SysSectionPaddingXY)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'flex-start',
-		alignItems: 'flex-start',
-		width: '90%',
-		maxWidth: '727px',
-		height: '90vh',
-		maxHeight: '850px',
-		overflowY: 'auto',
+		justifyContent: 'center', // ou flex-start, se preferir
+		alignItems: 'center', // AQUI É O PULO DO GATO
+		width: '100%',
+		maxWidth: '100%',
 		gap: sysSizing.spacingFixedMd,
 		[theme.breakpoints.down('sm')]: {
-			width: '95%',
-			padding: theme.spacing(2),
-		}
-	})),
+		  width: '95%',
+		  padding: theme.spacing(2),
+		},
+	  })),
 	Header: styled(Box)(({ theme }) => ({
 		display: 'flex',
 		flexDirection: 'row',
