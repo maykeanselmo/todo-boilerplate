@@ -56,5 +56,4 @@ export interface IToDos extends IDoc {
 	visibility: TaskVisibility ;
 	user?: IUserProfile;
 	userId: string;
-	teste: string
 }
