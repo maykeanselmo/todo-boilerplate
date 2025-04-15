@@ -1,6 +1,6 @@
 # 📋 Advanced To-Do List
 
-Um gerenciador de tarefas completo, construído com **Meteor, React, TypeScript e Material UI**. Esse projeto permite que usuários criem, editem, visualizem e excluam tarefas com controle de visibilidade e autenticação. Ideal para demonstrar habilidades com Meteor, lógica de permissões e responsividade. Esta versão utiliza o boilerplate desenvolvido pela equipe do Synergia.
+Um gerenciador de tarefas completo, construído com **Meteor, React, TypeScript e Material UI**. Esse projeto permite que usuários criem, editem, visualizem e excluam tarefas com controle de visibilidade e autenticação. Esta versão utiliza o boilerplate desenvolvido pela equipe do Synergia.
 
 ## ✨ Funcionalidades
 
