@@ -6,7 +6,6 @@ import { IToDos } from '../../api/toDosSch';
 import { toDosApi } from '../../api/toDosApi';
 import AuthContext from '../../../../app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
-import { ShowNotification } from '/imports/ui/appComponents/showNotification/showNotification';
 
 
 interface IInitialConfig {
