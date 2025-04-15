@@ -28,7 +28,7 @@ Um gerenciador de tarefas completo, construído com **Meteor, React, TypeScript 
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/advanced-todo-list.git
+git clone https://github.com/maykeanselmo/todo-boilerplate.git
 
 # Acesse a pasta
 cd advanced-todo-list
@@ -38,3 +38,14 @@ meteor npm install
 
 # Inicie o servidor
 meteor run
+```
+
+![Image](https://github.com/user-attachments/assets/94298eda-ea43-4454-8f8f-b091296081d5)
+![Image](https://github.com/user-attachments/assets/299f4400-1e30-42c1-81bb-8d4e55ee3552)
+![Image](https://github.com/user-attachments/assets/3e15ea11-e526-41a7-b03c-59c92e336beb)
+
+![Image](https://github.com/user-attachments/assets/bbf37e8c-da60-49f0-ac74-cfcea2b24a0d)
+
+![Image](https://github.com/user-attachments/assets/6b221ffc-7adf-4ca9-9710-6abce245a72b)
+![Image](https://github.com/user-attachments/assets/19363115-27ee-443c-a848-fa26dee9938d)
+
