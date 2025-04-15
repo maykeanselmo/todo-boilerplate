@@ -31,7 +31,7 @@ Um gerenciador de tarefas completo, construído com **Meteor, React, TypeScript 
 git clone https://github.com/maykeanselmo/todo-boilerplate.git
 
 # Acesse a pasta
-cd To-Do
+cd todo-boilerplate\To-Do\To-Do
 
 # Instale as dependências
 meteor npm install
