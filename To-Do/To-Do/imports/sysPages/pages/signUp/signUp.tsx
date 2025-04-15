@@ -16,6 +16,10 @@ import { IUserProfile } from '/imports/modules/userprofile/api/userProfileSch';
 import SignUpStyles from './signUpStyle';
 import SysIcon from '../../../ui/components/sysIcon/sysIcon';
 import SysFormButton from '../../../ui/components/sysFormFields/sysFormButton/sysFormButton';
+import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
+import { ShowNotification } from '../../../ui/appComponents/showNotification/showNotification';
+
+
 interface ISignUp {
 	showNotification: (options?: Object) => void;
 	navigate: NavigateFunction;
@@ -47,9 +51,10 @@ const signUpPhrases = [
   
 
 export const SignUp = (props: ISignUp) => {
-	const { showNotification } = props;
+	//const { showNotification } = props;
 	const { Container, Content, FormContainer, FormWrapper } = SignUpStyles;
 	const randomPhrase = signUpPhrases[Math.floor(Math.random() * signUpPhrases.length)];
+	const {showNotification} = React.useContext(AppLayoutContext);
 
 	const handleSubmit = (doc: { email: string; password: string, username: string }) => {
 		const { email, password , username} = doc;
@@ -58,19 +63,19 @@ export const SignUp = (props: ISignUp) => {
 			console.log("RESULTADO DA CRIAÇÃO:", { err, r });
 			if (err) {
 				console.log('Login err', err);
-				showNotification &&
+				
 					showNotification({
 						type: 'warning',
 						title: 'Problema na criação do usuário!',
-						description: 'Erro ao fazer registro em nossa base de dados!'
+						message: 'Erro ao fazer registro em nossa base de dados!'
 					});
 			} else {
 				console.log("Chamando notificação de sucesso");
-				showNotification &&
+				
 					showNotification({
 						type: 'success',
 						title: 'Cadastrado com sucesso!',
-						description: 'Registro de usuário realizado em nossa base de dados!'
+						message: 'Registro de usuário realizado em nossa base de dados!'
 					});
 			}
 		});
