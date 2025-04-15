@@ -39,6 +39,7 @@ meteor npm install
 # Inicie o servidor
 meteor run
 ```
+## 🖼️ Capturas de Tela
 
 ![Image](https://github.com/user-attachments/assets/94298eda-ea43-4454-8f8f-b091296081d5)
 ![Image](https://github.com/user-attachments/assets/299f4400-1e30-42c1-81bb-8d4e55ee3552)
