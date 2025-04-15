@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { formDialogStyles } from './formDialogStyles';
 import SysIcon from '/imports/ui/components/sysIcon/sysIcon';
-
+ 
 interface IFormDialogProps extends IShowDialogProps {
 	showDialog: (options?: IShowDialogProps) => void; // Esse método é obrigatório para todo componente customizado de diálogo.
 	closeDialog: (

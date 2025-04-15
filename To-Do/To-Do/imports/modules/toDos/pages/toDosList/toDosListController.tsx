@@ -6,6 +6,7 @@ import { IToDos } from '../../api/toDosSch';
 import { toDosApi } from '../../api/toDosApi';
 import AuthContext from '../../../../app/authProvider/authContext';
 import AppLayoutContext from '/imports/app/appLayoutProvider/appLayoutContext';
+import { ShowNotification } from '/imports/ui/appComponents/showNotification/showNotification';
 
 
 interface IInitialConfig {
@@ -51,6 +52,7 @@ const ToDosListController = () => {
 	const toDosSchReduzido = { title, typeMulti, date, user, userId };
 	const sysLayoutContext = React.useContext(AppLayoutContext);
 	const authContext= React.useContext(AuthContext);
+	const { showNotification } = React.useContext(AppLayoutContext);
 
 	const { sortProperties, filter } = config;
 	const sort = {
@@ -131,7 +133,11 @@ const ToDosListController = () => {
 					onClose: () => sysLayoutContext.closeModal()
 				  });
 			 } else{
-				alert("Só o dono da tarefa pode alterá-la");
+				showNotification({
+					type: 'error',
+					title: 'Ops! Essa não é sua tarefa...',
+					message: `Só o dono da tarefa pode alterá-la`
+				});
 			 }
 			 
 	}, []);
@@ -141,7 +147,13 @@ const ToDosListController = () => {
 		if(task.userId===authContext.user?._id){
 			toDosApi.remove(task);
 		 } else {
-			alert("Só o dono da tarefa pode excluí-la");
+			
+			
+			showNotification({
+				type: 'error',
+				title: 'Ops! Essa não é sua tarefa...',
+				message: `Só o dono da tarefa pode excluí-la`
+			});
 		 }
 	
 	}, []);

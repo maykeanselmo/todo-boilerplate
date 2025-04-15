@@ -59,7 +59,10 @@ const AppLayoutProvider: React.FC<{ children?: ReactNode }> = ({ children }) => 
         setShowNotification({
             ...showNotification,
             ...props,
-            close: ({event, reason} : ICloseNotification = {}) => handleCloseNotification({event, reason, callBack: onClose}),
+            close: (params?: ICloseNotification) => {
+                const { event, reason } = params || {};
+                handleCloseNotification({ event, reason, callBack: onClose });
+              }
             open: true
         });
     }, []);
