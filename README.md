@@ -8,12 +8,12 @@ Um gerenciador de tarefas completo, construído com **Meteor, React, TypeScript 
 - 👋 Tela de boas-vindas com últimas tarefas adicionadas/atualizadas.
 - 📃 Criação, edição e exclusão de tarefas.
 - ✅ Marcar/desmarcar tarefas como concluídas.
-- 🔍 Pesquisa por descrição das tarefas.
+- 🔍 Pesquisa por nome das tarefas.
 - 📄 Controle de visibilidade (pessoal/público).
 - 🧾 Paginação com limite de 4 tarefas por página.
 - 📱 Layout responsivo para dispositivos móveis.
 - 🛡️ Apenas o dono da tarefa pode editá-la ou removê-la.
-- 💬 Notificações de sucesso ou erro com `showNotification`.
+  
 
 ## 🚀 Tecnologias
 
